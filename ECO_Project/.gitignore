@@ -1,0 +1,25 @@
+venv/
+__pycache__/
+draft.*
+.vscode/settings.json
+
+# Virtualenv
+.Python
+[Bb]in
+[Ii]nclude
+[Ll]ib
+[Ll]ib64
+[Ll]ocal
+[Ss]cripts
+pyvenv.cfg
+.venv
+pip-selfcheck.json
+
+tmp*/
+
+.ipynb_checkpoints/
+catboost_info/
+log
+*.prof
+
+build/

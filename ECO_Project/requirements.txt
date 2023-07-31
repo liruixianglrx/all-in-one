@@ -1,0 +1,6 @@
+parsimonious
+jupyter
+notebook
+pandas
+numpy
+black

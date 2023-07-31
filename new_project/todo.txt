@@ -1,0 +1,27 @@
+需要：
+随机input样式
+
+总目标，将golden_output_results赋值
+
+1.1多线程分开golden_inputs
+1.2将golden结构体中的gloden.masked_input_nodes赋值
+1.3将golden.target_nodes赋值
+1.4将golden.gate_list赋值
+
+需要:获得gloden.masked_input_nodes结构
+gloden.target_nodes结构
+gloden.gate_forward_order结构
+gloden.gate_list结构：gate_list:类型，input_index，output_index
+最后需要self.golden.masked_output_nodes结构
+其中masked_output_nodes与forward中的节点是同一个指针
+
+每个gate都会有node_list列表并且能设置其值
+
+
+做了的事：
+以每个input为组
+    forward:将masked_input_nodes的值赋值
+    将target_nodes值赋值
+    按照gate_forward_order顺序赋值gate，也就是node值
+    将masked_output_nodes值取出来
+    存入golden_output_results

@@ -1,0 +1,14 @@
+read_verilog tmp/minterm.v
+
+write_ilang
+
+proc; opt
+
+techmap; opt
+
+
+dfflibmap -liberty syn/mycells.lib
+
+abc -liberty syn/mycells.lib
+
+write_verilog -noattr  tmp/synth.v

@@ -1,0 +1,31 @@
+node_list :
+{"__type__": "Node", "node_name": "a", "level": 0, "value": -1, "driver_index": -1, "load_index": [0, 4]}
+{"__type__": "Node", "node_name": "b", "level": 0, "value": -1, "driver_index": -1, "load_index": [0, 3]}
+{"__type__": "Node", "node_name": "c", "level": 0, "value": -1, "driver_index": -1, "load_index": [3, 4]}
+{"__type__": "Node", "node_name": "y1", "level": 2, "value": -1, "driver_index": 1, "load_index": []}
+{"__type__": "Node", "node_name": "y2", "level": 2, "value": -1, "driver_index": 2, "load_index": []}
+{"__type__": "Node", "node_name": "g1", "level": 1, "value": -1, "driver_index": 0, "load_index": [1]}
+{"__type__": "Node", "node_name": "g2", "level": 1, "value": -1, "driver_index": 4, "load_index": [1]}
+{"__type__": "Node", "node_name": "g3", "level": 1, "value": -1, "driver_index": 3, "load_index": [2]}
+{"__type__": "Node", "node_name": "t_0", "level": 1, "value": -1, "driver_index": -1, "load_index": [2]}
+{"__type__": "Node", "node_name": "0", "level": 0, "value": 0, "driver_index": -1, "load_index": []}
+{"__type__": "Node", "node_name": "1", "level": 0, "value": 1, "driver_index": -1, "load_index": []}
+masked_input_nodes :
+{"__type__": "Node", "node_name": "a", "level": 0, "value": -1, "driver_index": -1, "load_index": [0, 4]}
+{"__type__": "Node", "node_name": "b", "level": 0, "value": -1, "driver_index": -1, "load_index": [0, 3]}
+{"__type__": "Node", "node_name": "c", "level": 0, "value": -1, "driver_index": -1, "load_index": [3, 4]}
+target_nodes :
+{"__type__": "Node", "node_name": "t_0", "level": 1, "value": -1, "driver_index": -1, "load_index": [2]}
+gate_forward_order :
+[0, 3, 4, 1, 2]
+gate_list :
+{"__type__": "Gate", "gate_type": "And", "input_index": [0, 1], "output_index": 5}
+{"__type__": "Gate", "gate_type": "And", "input_index": [5, 6], "output_index": 3}
+{"__type__": "Gate", "gate_type": "Or", "input_index": [8, 7], "output_index": 4}
+{"__type__": "Gate", "gate_type": "Nor", "input_index": [1, 2], "output_index": 7}
+{"__type__": "Gate", "gate_type": "Xor", "input_index": [0, 2], "output_index": 6}
+masked_output_nodes :
+{"__type__": "Node", "node_name": "y1", "level": 2, "value": -1, "driver_index": 1, "load_index": []}
+{"__type__": "Node", "node_name": "y2", "level": 2, "value": -1, "driver_index": 2, "load_index": []}
+masked_input_num: 
+3
