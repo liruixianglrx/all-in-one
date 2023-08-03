@@ -28,4 +28,5 @@ masked_output_nodes :
 {"__type__": "Node", "node_name": "y1", "level": 2, "value": -1, "driver_index": 1, "load_index": []}
 {"__type__": "Node", "node_name": "y2", "level": 2, "value": -1, "driver_index": 2, "load_index": []}
 masked_input_num: 
-3
+3target_num: 
+1

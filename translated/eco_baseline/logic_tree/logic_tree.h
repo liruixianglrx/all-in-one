@@ -49,7 +49,7 @@ void Gate::get_output_value() {
         input_values.push_back(node_list[input].get_value());
     }
     
-    int output_value = compute_gate_output(input_values);
+    // int output_value = compute_gate_output(input_values);
     node_list[output_index].set_value(output_value);
 }
 

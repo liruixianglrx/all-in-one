@@ -276,6 +276,13 @@ class EcoEngine:
         tstr = "masked_input_num: \n"
         file.write(tstr)
         file.write(str(masked_input_num))
+        file.write("\n")
+
+        tstr = "target_num: \n"
+        file.write(tstr)
+        file.write(str(tree.target_num))
+
+
         file.close()
 
 

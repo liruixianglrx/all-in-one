@@ -15,7 +15,8 @@ class LogicTree
 public:
     vector<Node *> node_list;
     // 记录在node_list中的index
-    vector<int> masked_input_nodes, target_nodes, masked_output_nodes;
+    //TODO: masked_nodes xuliehua
+    vector<int> masked_input_nodes, target_nodes, masked_output_nodes,masked_nodes;
     unordered_map<string, int> hash;
     vector<int> gate_forward_order;
     vector<Gate *> gate_list;
@@ -172,5 +173,14 @@ public:
         {
             gate_list[gate_index]->get_output_value();
         }
+    }
+
+    vector<int>& nodes_2_values() {
+        vector<int> ans;
+        for (auto it : masked_nodes) {
+            ans.push_back(node_list[it]->value);
+        }
+
+        return ans;
     }
 };

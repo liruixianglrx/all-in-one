@@ -7,20 +7,24 @@
 #include "node.h"
 #include "utils.h"
 
-class Gate {
-protected:
+class Gate
+{
+public:
     std::vector<int> input_index;
     int output_index;
-    std::vector<Node> node_list;
+    std::vector<Node *> node_list;
     std::string id;
 
 public:
-    Gate(const std::vector<int>& input_index, int output_index, const std::vector<Node>& node_list)
+    Gate(const std::vector<int> &input_index, int output_index, const std::vector<Node> &node_list)
         : input_index(input_index), output_index(output_index), node_list(node_list), id(random_id(2)) {}
 
-    virtual bool backward_done() const {
-        for (int i : input_index) {
-            if (!node_list[i].level_set_done) {
+    virtual bool backward_done() const
+    {
+        for (int i : input_index)
+        {
+            if (!node_list[i].level_set_done)
+            {
                 return false;
             }
         }
@@ -29,60 +33,74 @@ public:
 
     virtual int get_output_value() = 0;
 
-    void set_output_value(int value) {
+    void set_output_value(int value)
+    {
         assert(value == 0 || value == 1);
-        node_list[output_index].set_value(value);
+        node_list[output_index]->set_value(value);
     }
 
-    std::string to_string() const {
+    std::string to_string() const
+    {
         return "[" + typeid(*this).name() + "_" + id + "] inputs: " + vector_to_string(input_index) +
                ", output: " + std::to_string(output_index);
     }
 
-    bool operator<(const Gate& other) const {
-        const Node& self_out = node_list[output_index];
-        const Node& other_out = node_list[other.output_index];
+    bool operator<(const Gate &other) const
+    {
+        const Node &self_out = node_list[output_index];
+        const Node &other_out = node_list[other.output_index];
         return self_out.level < other_out.level;
     }
 };
 
-class Not : public Gate {
+class Not : public Gate
+{
 public:
-    Not(const std::vector<int>& input_index, int output_index, const std::vector<Node>& node_list)
+    Not(const std::vector<int> &input_index, int output_index, const std::vector<Node> &node_list)
         : Gate(input_index, output_index, node_list) {}
 
-    int get_output_value() override {
+    int get_output_value() override
+    {
         int input_value = node_list[input_index[0]].value;
-        if (input_value == 1) {
+        if (input_value == 1)
+        {
             set_output_value(0);
             return 0;
-        } else {
+        }
+        else
+        {
             set_output_value(1);
             return 1;
         }
     }
 };
 
-class Buf : public Gate {
+class Buf : public Gate
+{
 public:
-    Buf(const std::vector<int>& input_index, int output_index, const std::vector<Node>& node_list)
+    Buf(const std::vector<int> &input_index, int output_index, const std::vector<Node> &node_list)
         : Gate(input_index, output_index, node_list) {}
 
-    int get_output_value() override {
+    int get_output_value() override
+    {
         int input_value = node_list[input_index[0]].value;
         set_output_value(input_value);
         return input_value;
     }
 };
 
-class And : public Gate {
+class And : public Gate
+{
 public:
-    And(const std::vector<int>& input_index, int output_index, const std::vector<Node>& node_list)
+    And(const std::vector<int> &input_index, int output_index, const std::vector<Node> &node_list)
         : Gate(input_index, output_index, node_list) {}
 
-    int get_output_value() override {
-        for (int i : input_index) {
-            if (node_list[i].value == 0) {
+    int get_output_value() override
+    {
+        for (int i : input_index)
+        {
+            if (node_list[i].value == 0)
+            {
                 set_output_value(0);
                 return 0;
             }
@@ -92,14 +110,18 @@ public:
     }
 };
 
-class Nand : public Gate {
+class Nand : public Gate
+{
 public:
-    Nand(const std::vector<int>& input_index, int output_index, const std::vector<Node>& node_list)
+    Nand(const std::vector<int> &input_index, int output_index, const std::vector<Node> &node_list)
         : Gate(input_index, output_index, node_list) {}
 
-    int get_output_value() override {
-        for (int i : input_index) {
-            if (node_list[i].value == 0) {
+    int get_output_value() override
+    {
+        for (int i : input_index)
+        {
+            if (node_list[i].value == 0)
+            {
                 set_output_value(1);
                 return 1;
             }
@@ -109,14 +131,18 @@ public:
     }
 };
 
-class Or : public Gate {
+class Or : public Gate
+{
 public:
-    Or(const std::vector<int>& input_index, int output_index, const std::vector<Node>& node_list)
+    Or(const std::vector<int> &input_index, int output_index, const std::vector<Node> &node_list)
         : Gate(input_index, output_index, node_list) {}
 
-    int get_output_value() override {
-        for (int i : input_index) {
-            if (node_list[i].value == 1) {
+    int get_output_value() override
+    {
+        for (int i : input_index)
+        {
+            if (node_list[i].value == 1)
+            {
                 set_output_value(1);
                 return 1;
             }
@@ -126,14 +152,18 @@ public:
     }
 };
 
-class Nor : public Gate {
+class Nor : public Gate
+{
 public:
-    Nor(const std::vector<int>& input_index, int output_index, const std::vector<Node>& node_list)
+    Nor(const std::vector<int> &input_index, int output_index, const std::vector<Node> &node_list)
         : Gate(input_index, output_index, node_list) {}
 
-    int get_output_value() override {
-        for (int i : input_index) {
-            if (node_list[i].value == 1) {
+    int get_output_value() override
+    {
+        for (int i : input_index)
+        {
+            if (node_list[i].value == 1)
+            {
                 set_output_value(0);
                 return 0;
             }
@@ -143,36 +173,46 @@ public:
     }
 };
 
-class Xor : public Gate {
+class Xor : public Gate
+{
 public:
-    Xor(const std::vector<int>& input_index, int output_index, const std::vector<Node>& node_list)
+    Xor(const std::vector<int> &input_index, int output_index, const std::vector<Node> &node_list)
         : Gate(input_index, output_index, node_list) {}
 
-    int get_output_value() override {
+    int get_output_value() override
+    {
         int value_0 = node_list[input_index[0]].value;
         int value_1 = node_list[input_index[1]].value;
-        if (value_0 != value_1) {
+        if (value_0 != value_1)
+        {
             set_output_value(1);
             return 1;
-        } else {
+        }
+        else
+        {
             set_output_value(0);
             return 0;
         }
     }
 };
 
-class Xnor : public Gate {
+class Xnor : public Gate
+{
 public:
-    Xnor(const std::vector<int>& input_index, int output_index, const std::vector<Node>& node_list)
+    Xnor(const std::vector<int> &input_index, int output_index, const std::vector<Node> &node_list)
         : Gate(input_index, output_index, node_list) {}
 
-    int get_output_value() override {
+    int get_output_value() override
+    {
         int value_0 = node_list[input_index[0]].value;
         int value_1 = node_list[input_index[1]].value;
-        if (value_0 == value_1) {
+        if (value_0 == value_1)
+        {
             set_output_value(1);
             return 1;
-        } else {
+        }
+        else
+        {
             set_output_value(0);
             return 0;
         }
