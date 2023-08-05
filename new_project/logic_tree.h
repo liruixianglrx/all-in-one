@@ -1,3 +1,6 @@
+#ifndef LOGIC_TREE_H
+#define LOGIC_TREE_H
+
 #include <iostream>
 #include <vector>
 #include <unordered_map>
@@ -15,8 +18,8 @@ class LogicTree
 public:
     vector<Node *> node_list;
     // 记录在node_list中的index
-    //TODO: masked_nodes xuliehua
-    vector<int> masked_input_nodes, target_nodes, masked_output_nodes,masked_nodes;
+    // TODO: masked_nodes xuliehua
+    vector<int> masked_input_nodes, target_nodes, masked_output_nodes, masked_nodes;
     unordered_map<string, int> hash;
     vector<int> gate_forward_order;
     vector<Gate *> gate_list;
@@ -26,10 +29,10 @@ public:
     int target_num;
 
 public:
-    LogicTree()
+    LogicTree(string path)
     {
         ifstream file;
-        file.open("/home/lrx/Desktop/all-in-one/txts/logic_tree.txt", ios::in);
+        file.open(path, ios::in);
         string tmp;
         int cnt = 0;
         if (file.is_open())
@@ -38,7 +41,7 @@ public:
         }
         while (getline(file, tmp))
         {
-            if (tmp[0] != '{')
+            while (tmp[0] == '*')
             {
                 cnt++;
                 getline(file, tmp);
@@ -83,11 +86,49 @@ public:
                 vector<int> input_index = json_data["input_index"].get<std::vector<int>>();
                 int output_index = json_data["output_index"].get<int>();
                 Gate *gate;
+
                 if (gate_type == "And")
                 {
                     gate = new And(input_index, output_index, node_list);
                     gate->node_list = node_list;
                 }
+                else if (gate_type == "Not")
+                {
+                    gate = new Not(input_index, output_index, node_list);
+                    gate->node_list = node_list;
+                }
+                else if (gate_type == "Buf")
+                {
+                    gate = new Buf(input_index, output_index, node_list);
+                    gate->node_list = node_list;
+                }
+                else if (gate_type == "Nand")
+                {
+                    gate = new Nand(input_index, output_index, node_list);
+                    gate->node_list = node_list;
+                }
+                else if (gate_type == "Or")
+                {
+                    gate = new Or(input_index, output_index, node_list);
+                    gate->node_list = node_list;
+                }
+                else if (gate_type == "Nor")
+                {
+                    gate = new Nor(input_index, output_index, node_list);
+                    gate->node_list = node_list;
+                }
+                else if (gate_type == "Xor")
+                {
+                    gate = new Xor(input_index, output_index, node_list);
+                    gate->node_list = node_list;
+                }
+                else if (gate_type == "Xnor")
+                {
+                    gate = new Xnor(input_index, output_index, node_list);
+                    gate->node_list = node_list;
+                }
+
+                gate_list.push_back(gate);
             }
             if (cnt == 6)
             {
@@ -102,6 +143,12 @@ public:
             if (cnt == 8)
             {
                 target_num = stoi(tmp);
+            }
+            if (cnt == 9)
+            {
+                nlohmann::json json_data = nlohmann::json::parse(tmp);
+                string node_name = json_data["node_name"].get<std::string>();
+                masked_nodes.push_back(hash[node_name]);
             }
         }
 
@@ -174,13 +221,6 @@ public:
             gate_list[gate_index]->get_output_value();
         }
     }
-
-    vector<int>& nodes_2_values() {
-        vector<int> ans;
-        for (auto it : masked_nodes) {
-            ans.push_back(node_list[it]->value);
-        }
-
-        return ans;
-    }
 };
+
+#endif

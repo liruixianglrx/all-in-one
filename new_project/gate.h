@@ -1,3 +1,6 @@
+#ifndef GATE_H
+#define GATE_H
+
 #include <bits/stdc++.h>
 
 class Gate
@@ -188,3 +191,5 @@ public:
         }
     }
 };
+
+#endif

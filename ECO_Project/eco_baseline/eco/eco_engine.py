@@ -223,65 +223,74 @@ class EcoEngine:
             #得到_input_signals的样式的input
             inputs = self._input_signals(node_num=self.masked_input_num)
 
-        self._write_logic_tree(self.origin,self.masked_input_num)
+        self._write_logic_tree(self.origin,self.masked_input_num,"origin_logic_tree.txt")
+        self._write_logic_tree(self.golden, self.masked_input_num,"golden_logic_tree.txt")
         self._traverse_golden(inputs)
         self._traverse_origin(inputs)
         self._find_on_off()
         # print("ON:", self.on_index)
         # print("OFF:", self.off_index)
 
-    def _write_logic_tree(self, tree : LogicTree, masked_input_num :int):
-        file = open("/home/lrx/Desktop/all-in-one/txts/logic_tree.txt", "w")
-        tstr = "node_list :\n"
+    def _write_logic_tree(self, tree : LogicTree, masked_input_num :int,name : str):
+        name ="/home/lrx/Desktop/all-in-one/txts/"+name;
+        file = open(name, "w")
+        tstr = "*node_list :\n"
         file.write(tstr)
         for i, node in enumerate(tree.node_list):
             json_str = json.dumps(node, cls=my_encoder.MyEncoder)
             file.write(json_str)
             file.write("\n")
 
-        tstr = "masked_input_nodes :\n"
+        tstr = "*masked_input_nodes :\n"
         file.write(tstr)
         for i, node in enumerate(tree.masked_input_nodes):
             json_str =json.dumps(node,cls=my_encoder.MyEncoder)
             file.write(json_str)
             file.write("\n")
 
-        tstr = "target_nodes :\n"
+        tstr = "*target_nodes :\n"
         file.write(tstr)
         for i, node in enumerate(tree.target_nodes):
             json_str =json.dumps(node,cls=my_encoder.MyEncoder)
             file.write(json_str)
             file.write("\n")
 
-        tstr = "gate_forward_order :\n"
+        tstr = "*gate_forward_order :\n"
         file.write(tstr)
         json_str = json.dumps(tree.gate_forward_order.tolist())
         file.write(json_str)
         file.write("\n")
 
-        tstr = "gate_list :\n"
+        tstr = "*gate_list :\n"
         file.write(tstr)
         for i, gate in enumerate(tree.gate_list):
             json_str = json.dumps(gate, cls=my_encoder.MyEncoder)
             file.write(json_str)
             file.write("\n")
 
-        tstr = "masked_output_nodes :\n"
+        tstr = "*masked_output_nodes :\n"
         file.write(tstr)
         for i, node in enumerate(tree.masked_output_nodes):
             json_str = json.dumps(node, cls=my_encoder.MyEncoder)
             file.write(json_str)
             file.write("\n")
 
-        tstr = "masked_input_num: \n"
+        tstr = "*masked_input_num: \n"
         file.write(tstr)
         file.write(str(masked_input_num))
         file.write("\n")
 
-        tstr = "target_num: \n"
+        tstr = "*target_num: \n"
         file.write(tstr)
         file.write(str(tree.target_num))
+        file.write("\n")
 
+        tstr = "*masked_nodes :\n"
+        file.write(tstr)
+        for i, node in enumerate(tree.masked_nodes):
+            json_str = json.dumps(node, cls=my_encoder.MyEncoder)
+            file.write(json_str)
+            file.write("\n")
 
         file.close()
 
