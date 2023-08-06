@@ -6,6 +6,7 @@ import eco_baseline.eco.MyEncoder as my_encoder
 from random import sample
 import eco_ext
 import numpy as np
+import time
 
 import eco_baseline.eco_utils as eco_utils
 from eco_baseline.eco.base_node import BaseNode
@@ -225,8 +226,14 @@ class EcoEngine:
 
         self._write_logic_tree(self.origin,self.masked_input_num,"origin_logic_tree.txt")
         self._write_logic_tree(self.golden, self.masked_input_num,"golden_logic_tree.txt")
+
+        start_time = time.time()
         self._traverse_golden(inputs)
         self._traverse_origin(inputs)
+        end_time = time.time()
+        run_time = end_time - start_time
+        print("程序运行时间：", run_time * 1e6, "us")
+
         self._find_on_off()
         # print("ON:", self.on_index)
         # print("OFF:", self.off_index)

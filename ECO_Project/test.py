@@ -6,8 +6,8 @@ from utils.utils import *
 if __name__ == "__main__":
     # origin = "./dataset/new/unit7/F.v"
     # golden = "./dataset/new/unit7/G.v"
-    origin = "./dataset/ICCAD2017/unit1/F.v"
-    golden = "./dataset/ICCAD2017/unit1/G.v"
+    origin = "./dataset/ICCAD2017/unit2/F.v"
+    golden = "./dataset/ICCAD2017/unit2/G.v"
 
     engine = EcoEngine(origin, golden, early_stop=5)
     # print(engine.origin.masked_nodes)

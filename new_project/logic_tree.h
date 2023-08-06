@@ -29,6 +29,20 @@ public:
     int target_num;
 
 public:
+    nlohmann::json toJson() const
+    {
+        nlohmann::json json_obj;
+        json_obj["gate_forward_order"] = gate_forward_order;
+        nlohmann::json inner_array;
+        for (auto &it : node_list)
+        {
+            inner_array.push_back(it->toJson());
+        }
+        json_obj["node_list"] = inner_array;
+        // json_obj["node_list"] = node_list;
+        return json_obj;
+    }
+
     LogicTree(string path)
     {
         ifstream file;
@@ -54,7 +68,7 @@ public:
                 tnode->node_name = json_data["node_name"].get<std::string>();
                 tnode->level = json_data["level"].get<int>();
                 tnode->value = json_data["value"].get<int>();
-                json_data["driver_index"].get<int>();
+                tnode->driver_index = json_data["driver_index"].get<int>();
                 tnode->load_index = json_data["load_index"].get<std::vector<int>>();
                 hash[tnode->node_name] = node_list.size();
                 node_list.push_back(tnode);

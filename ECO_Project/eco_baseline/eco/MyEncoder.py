@@ -30,4 +30,6 @@ class MyEncoder(json.JSONEncoder):
                 "output_index" : obj.output_index
             }
 
+        if isinstance(obj, np.int8):
+            return int(obj)
         return super().default(obj)
